@@ -6,7 +6,7 @@ import { userModel } from '../Models/userModel';
 
 export const signup = async (req: Request, res: Response)=> {
     try {
-        const { email, password, confirmPassword, username } = req.body;
+        const { email, password, confirmPassword, username,roles } = req.body;
 
         // Validate input
         if (!email || !password || !username||!confirmPassword) {
@@ -27,7 +27,8 @@ export const signup = async (req: Request, res: Response)=> {
                 email,
                 password,
                 confirmPassword,
-                username
+                username,
+                roles
             });
     
             if (newUser) {

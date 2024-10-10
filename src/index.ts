@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose"
 // import { checkForToken } from "./Middlewares/authHelper";
 import userRouter from "./Routes/userRoutes";
+import productRouter from "./Routes/productRoutes";
+import { checkForToken } from "./Middlewares/authHelper";
 
 
 const app = express();
@@ -19,7 +21,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(checkForToken());
+// app.use(checkForToken);
 
 
 //Enpoints
@@ -28,6 +30,7 @@ app.get("/", (req:Request, res:Response) => {
 });
 
 app.use("/",userRouter);
+app.use("/product",checkForToken(),productRouter);
 
 const server = http.createServer(app);
 

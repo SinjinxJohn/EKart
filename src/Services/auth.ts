@@ -2,13 +2,12 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { User } from "Models/userInterface";
 import { UserModel } from "Models/userModel";
 
-export const secret = process.env.secret||"hot";
+export const secret = process.env.secret||"betty-bought-some-butter-but-the-butter-was-bitter";
 export function createTokenForUser(user:UserModel): string{
     const payload = {
         _id:user.id,
-        email:user.email,
-        password:user.password,
-        confirmPassword:user.confirmPassword,
+        username:user.username,
+        roles:user.roles,
     }
 
     const token:string = jwt.sign(payload,secret,{expiresIn:'10m'}); 
@@ -16,7 +15,8 @@ export function createTokenForUser(user:UserModel): string{
 }
 
 export function validateToken(token:string){
-    const payload = jwt.verify(token,secret);
+    const payload = jwt.verify(token,secret) as JwtPayload;
+    // console.log(payload);
     return payload;
 }
 
