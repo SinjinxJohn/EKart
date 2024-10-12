@@ -10,7 +10,7 @@ export function createTokenForUser(user:UserModel): string{
         roles:user.roles,
     }
 
-    const token:string = jwt.sign(payload,secret,{expiresIn:'10m'}); 
+    const token:string = jwt.sign(payload,secret,{expiresIn:'2h'}); 
     return token;
 }
 
