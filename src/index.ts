@@ -9,6 +9,7 @@ import mongoose from "mongoose"
 import userRouter from "./Routes/userRoutes";
 import productRouter from "./Routes/productRoutes";
 import { checkForToken } from "./Middlewares/authHelper";
+import cartRoute from "./Routes/cartRoutes";
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.get("/", (req:Request, res:Response) => {
 
 app.use("/",userRouter);
 app.use("/product",checkForToken(),productRouter);
+app.use("/cart",checkForToken(),cartRoute);
 
 const server = http.createServer(app);
 
