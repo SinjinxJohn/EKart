@@ -10,6 +10,7 @@ import userRouter from "./Routes/userRoutes";
 import productRouter from "./Routes/productRoutes";
 import { checkForToken } from "./Middlewares/authHelper";
 import cartRoute from "./Routes/cartRoutes";
+import orderRoute from "./Routes/orderRoutes";
 
 
 const app = express();
@@ -27,12 +28,13 @@ app.use(cookieParser());
 
 //Enpoints
 app.get("/", (req:Request, res:Response) => {
-    res.status(200).send("This is the backend of noteHarbour");
+    res.status(200).send("This is the backend of EKart");
 });
 
 app.use("/",userRouter);
 app.use("/product",checkForToken(),productRouter);
 app.use("/cart",checkForToken(),cartRoute);
+app.use('/order',checkForToken(),orderRoute);
 
 const server = http.createServer(app);
 

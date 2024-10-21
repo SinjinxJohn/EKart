@@ -6,7 +6,7 @@ import { Cart, CartItem } from "./cartInterface";
 export interface CartModel extends Document, Cart { }
 export interface CartItemModel extends Document, CartItem { }
 
-    const CartItemSchema: Schema = new Schema<CartItemModel>({
+    export const CartItemSchema: Schema = new Schema<CartItemModel>({
         productId: { type: Schema.Types.ObjectId, ref: 'ProductModel', required: true },
         productName: { type: String, required: true },
         quantity: { type: Number, required: true },
