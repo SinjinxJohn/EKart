@@ -11,6 +11,7 @@ import productRouter from "./Routes/productRoutes";
 import { checkForToken } from "./Middlewares/authHelper";
 import cartRoute from "./Routes/cartRoutes";
 import orderRoute from "./Routes/orderRoutes";
+import paymentRouter from "./Routes/paymentRouter";
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use("/",userRouter);
 app.use("/product",checkForToken(),productRouter);
 app.use("/cart",checkForToken(),cartRoute);
 app.use('/order',checkForToken(),orderRoute);
+app.use('/payments',checkForToken(),paymentRouter);
 
 const server = http.createServer(app);
 
