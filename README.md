@@ -20,3 +20,7 @@ Welcome to EKart! This project is designed to provide a seamless online shopping
 - **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/), [MongoDB](https://www.mongodb.com/)
 - **Payment Gateway**: [Stripe](https://stripe.com/)
 - **Testing**: [Postman](https://www.postman.com/)
+
+
+## Deployed Link
+You can use the deployed server link [here](https://ekart-6mv3.onrender.com).
