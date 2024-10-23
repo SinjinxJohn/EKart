@@ -15,7 +15,7 @@ const createPaymentIntent = async (req, res) => {
             });
         }
         else {
-            const orderprice = order.totalPrice;
+            const orderprice = order.totalPrice * 100;
             const paymentIntent = await stripe.paymentIntents.create({
                 amount: orderprice,
                 currency: 'inr',
