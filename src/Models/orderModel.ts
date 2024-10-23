@@ -14,7 +14,7 @@ const OrderSchema: Schema<OrderModel> = new Schema({
 
         status:{
             type:String,
-            enum:['Shipped','Delivered','Ordered',"Pending","Paid"],
+            enum:['Shipped','Delivered','Ordered',"Pending","Paid","Refunded"],
             default:"Pending"
         },
         createdAt:{
