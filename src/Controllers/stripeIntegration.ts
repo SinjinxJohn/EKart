@@ -16,7 +16,7 @@ export const createPaymentIntent = async (req: Request, res: Response) => {
                 message: "Order does not exist"
             })
         } else {
-            const orderprice = order.totalPrice * 100;
+            const orderprice = order.totalPrice;
             const paymentIntent = await stripe.paymentIntents.create({
                 amount: orderprice,
                 currency: 'inr',
