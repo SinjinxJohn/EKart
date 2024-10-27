@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteReview = exports.addReview = exports.deleteProduct = exports.updateProduct = exports.getProductsByName = exports.getProductsByTag = exports.getAllProducts = exports.addProduct = void 0;
 const productModel_1 = require("../Models/productModel");
 const uuid_1 = require("uuid");
+const userModel_1 = require("../Models/userModel");
 const addProduct = async (req, res) => {
     try {
+        const userId = req.user?.id;
+        const user = await userModel_1.userModel.findById(userId);
         const { productName, productPrice, brand, colour, material, productImage, stock, tags } = req.body;
         if (!productName || !productPrice || !productImage || !stock || !brand || !colour || !material || !tags) {
             res.status(401).json({
@@ -13,6 +16,7 @@ const addProduct = async (req, res) => {
             });
         }
         else {
+            const address = user?.address;
             const productDetails = { brand: brand, colour: colour, material: material };
             const newprod = await productModel_1.productModel.create({
                 productName,
@@ -20,7 +24,8 @@ const addProduct = async (req, res) => {
                 productImage,
                 productDetails,
                 stock,
-                tags
+                tags,
+                address
             });
             res.status(201).json({
                 messageType: "success",

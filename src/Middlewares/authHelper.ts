@@ -10,7 +10,8 @@ import { validateToken } from "../Services/auth";
 export interface UserPayload{
   id:string,
   username:string,
-  roles:[string]
+  roles:[string],
+
 }
 export interface CustomRequest extends Request {
     user?: UserPayload;

@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { CustomRequest } from "../Middlewares/authHelper";
 import { cartModel } from "../Models/cartModel";
 import { orderModel } from "../Models/orderModel";
+import { userModel } from "../Models/userModel";
+import { productModel } from "../Models/productModel";
 
 
 
@@ -58,6 +60,7 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
         const userId = req.user?.id;
 
         const cart = await cartModel.findOne({ userId });
+        const user = await userModel.findById(userId);
         if (!cart || cart.items.length == 0) {
             res.status(404).json({
                 messageType: "error",
@@ -66,11 +69,32 @@ export const createOrder = async (req: CustomRequest, res: Response) => {
         } else {
             const totalPrice = cart.totalPrice;
             const items = cart.items;
+            var userAddress = user?.address;
+            if(!userAddress){
+                userAddress = "United India apartments, Mayur Vihar Phase - 1";
+            }
             const order = await new orderModel({
                 userId,
                 totalPrice,
                 items,
+                to:userAddress,
             })
+            for (const item of items) {
+                const productId = item.productId;
+                const quantity = item.quantity;
+    
+                // Find the product and update stock
+                const product = await productModel.findById(productId);
+                if (product) {
+                    if (product.stock >= quantity) {
+                        product.stock -= quantity;
+                        await product.save();
+                    } else {
+                         
+                    }
+                }
+            }
+    
 
             await order.save();
 

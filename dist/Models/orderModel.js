@@ -14,6 +14,10 @@ const OrderSchema = new mongoose_1.Schema({
         enum: ['Shipped', 'Delivered', 'Ordered', "Pending", "Paid", "Refunded"],
         default: "Pending"
     },
+    to: {
+        type: String,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now(),

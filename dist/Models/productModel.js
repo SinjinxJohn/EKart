@@ -19,6 +19,7 @@ const ProductSchema = new mongoose_1.Schema({
             date: { type: Date, default: Date.now }
         }
     ],
+    address: { type: String, required: true },
     purchased: { type: Number },
     stock: { type: Number, required: true },
     tags: [{ type: String }],

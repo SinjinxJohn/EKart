@@ -35,7 +35,8 @@ export const addToCart = async (req: CustomRequest, res: Response) => {
                             productName: product.productName,
                             totalPrice,
                             price: product.productPrice,
-                            quantity
+                            quantity,
+                            address:product.address
                         }
                     ]
                 });
@@ -56,7 +57,8 @@ export const addToCart = async (req: CustomRequest, res: Response) => {
                         productName: product.productName,
                         quantity,
                         price: product.productPrice,
-                        totalPrice
+                        totalPrice: totalPrice,
+                        address:product.address
                     });
                 }
                 cart.totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);

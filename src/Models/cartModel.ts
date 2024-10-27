@@ -11,7 +11,8 @@ export interface CartItemModel extends Document, CartItem { }
         productName: { type: String, required: true },
         quantity: { type: Number, required: true },
         price: { type: Number, required: true },
-        totalPrice: { type: Number, required: true }
+        totalPrice: { type: Number, required: true },
+        address:{type:String,required:true}
     })
     const CartSchema: Schema<CartModel> = new Schema({
         userId: { type: Schema.Types.ObjectId, ref: 'UserModel', required: true },

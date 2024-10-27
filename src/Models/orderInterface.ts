@@ -6,6 +6,7 @@ export interface Order{
     totalPrice:number,
     items:CartItem[],
     status:String,
+    to:String
     createdAt:Date
 
 }

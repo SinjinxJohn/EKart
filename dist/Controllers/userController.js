@@ -4,7 +4,7 @@ exports.logout = exports.login = exports.signup = void 0;
 const userModel_1 = require("../Models/userModel");
 const signup = async (req, res) => {
     try {
-        const { email, password, confirmPassword, username, roles } = req.body;
+        const { email, password, confirmPassword, username, roles, address } = req.body;
         // Validate input
         if (!email || !password || !username || !confirmPassword) {
             res.status(400).json({
@@ -22,18 +22,44 @@ const signup = async (req, res) => {
                 });
             }
             else {
-                const newUser = await userModel_1.userModel.create({
-                    email,
-                    password,
-                    confirmPassword,
-                    username,
-                    roles
-                });
-                if (newUser) {
-                    res.status(201).json({
-                        messageType: "success",
-                        message: newUser,
+                if (roles == "user" || roles == "Seller") {
+                    if (!address) {
+                        res.status(400).json({
+                            messageType: "error",
+                            message: "Address required"
+                        });
+                    }
+                    else {
+                        const newUser = await userModel_1.userModel.create({
+                            email,
+                            password,
+                            confirmPassword,
+                            username,
+                            roles,
+                            address
+                        });
+                        if (newUser) {
+                            res.status(201).json({
+                                messageType: "success",
+                                message: newUser,
+                            });
+                        }
+                    }
+                }
+                else {
+                    const newUser = await userModel_1.userModel.create({
+                        email,
+                        password,
+                        confirmPassword,
+                        username,
+                        roles
                     });
+                    if (newUser) {
+                        res.status(201).json({
+                            messageType: "success",
+                            message: newUser,
+                        });
+                    }
                 }
             }
         }

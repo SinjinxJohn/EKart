@@ -6,6 +6,7 @@ export interface Product{
         colour:string,
         material:string,
     },
+    address:string
     productImage:string,
     reviews:Review[],
     purchased:number,

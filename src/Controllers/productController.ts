@@ -3,9 +3,13 @@ import { productModel } from "../Models/productModel";
 import { Product, Review } from "../Models/productInterface";
 import {v4 as uuidv4} from 'uuid';
 import { CustomRequest } from "../Middlewares/authHelper";
+import { userModel } from "../Models/userModel";
 
-export const addProduct =async (req:Request,res:Response)=>{
+export const addProduct =async (req:CustomRequest,res:Response)=>{
     try{
+        const userId = req.user?.id;
+
+        const user  = await userModel.findById(userId);
         const {productName,productPrice,brand,colour,material,productImage,stock,tags} = req.body;
         if(!productName || !productPrice||!productImage||!stock||!brand||!colour||!material||!tags){
             res.status(401).json({
@@ -13,6 +17,7 @@ export const addProduct =async (req:Request,res:Response)=>{
                 message:"Invalid/missing metdata for product. Please add all details"
             })
         }else{
+            const address = user?.address;
             const productDetails = {brand:brand,colour:colour,material:material};
             const newprod = await productModel.create({
                 productName,
@@ -20,7 +25,8 @@ export const addProduct =async (req:Request,res:Response)=>{
                 productImage,
                 productDetails,
                 stock,
-                tags
+                tags,
+                address
             })
             res.status(201).json({
                 messageType:"success",

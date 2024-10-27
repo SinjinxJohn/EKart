@@ -6,7 +6,8 @@ export interface CartItem{
     productName:string,
     quantity:number,
     price:number,
-    totalPrice:number
+    totalPrice:number,
+    address:string
 }
 export interface Cart{
     userId:mongoose.Schema.Types.ObjectId,

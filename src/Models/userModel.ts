@@ -20,7 +20,8 @@ const UserSchema:Schema<UserModel> = new Schema({
     username:{type:String, required:true,unique:true},
     email:{type:String, required:true,unique:true,match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/},
     password:{type:String,min:8,required:true},
-    roles:{type:[String],default:["user"]},
+    roles:{type:[String], enum: ["user", "Admin", "Seller"],default:["user"]},
+    address:{type:String},
     confirmPassword:{type:String,required:true, min:8}
 })
 

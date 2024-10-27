@@ -3,6 +3,7 @@ export interface User{
     email:string,
     password:string,
     roles:string[],
+    address:string,
     confirmPassword:string,
     createdAt?: Date,
     updatedAt?:Date,

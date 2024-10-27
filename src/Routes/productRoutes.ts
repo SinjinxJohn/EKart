@@ -1,17 +1,17 @@
 import { addProduct, addReview, deleteProduct, deleteReview, getAllProducts, getProductsByName, getProductsByTag, updateProduct } from "../Controllers/productController";
 import express from "express";
 import { Router } from "express";
-import { checkRole } from "../Middlewares/authorizer";
+import { checkAdmin, checkForSeller, checkRole } from "../Middlewares/authorizer";
 
 const productRouter = express.Router();
 
-productRouter.post('/addProduct',checkRole,addProduct);
+productRouter.post('/addProduct',checkForSeller,addProduct);
 productRouter.get('/getAllProducts',getAllProducts);
 productRouter.get('/getProductByTag',getProductsByTag);
 productRouter.get('/getProductByName',getProductsByName);
-productRouter.put('/updateProduct/:id',checkRole,updateProduct);
-productRouter.delete('/deleteProduct/:id',checkRole,deleteProduct);
-productRouter.post('/addReview/:id',addReview);
-productRouter.delete('/:productId/deleteReview/:reviewId',deleteReview);
+productRouter.put('/updateProduct/:id',checkForSeller,updateProduct);
+productRouter.delete('/deleteProduct/:id',checkForSeller,deleteProduct);
+productRouter.post('/addReview/:id',checkAdmin,addReview);
+productRouter.delete('/:productId/deleteReview/:reviewId',checkAdmin,deleteReview);
 
 export default productRouter;

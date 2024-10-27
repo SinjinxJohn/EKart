@@ -9,7 +9,7 @@ const authorizer_1 = require("../Middlewares/authorizer");
 const orderRoute = express_1.default.Router();
 orderRoute.get('/getAllOrders', authorizer_1.checkRole, orderController_1.getAllOrders);
 orderRoute.get('/getUserOrders', orderController_1.getUserOrders);
-orderRoute.post('/createOrder', orderController_1.createOrder);
+orderRoute.post('/createOrder', authorizer_1.checkAdmin, orderController_1.createOrder);
 orderRoute.patch('/:id/updateOrder', authorizer_1.checkRole, orderController_1.updateStatus);
 orderRoute.delete('/:id/cancelOrder', orderController_1.cancelOrder);
 exports.default = orderRoute;

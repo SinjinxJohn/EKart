@@ -25,6 +25,7 @@ const ProductSchema:Schema<ProductModel> = new Schema({
 
         }
     ],
+    address:{type:String,required:true},
     purchased:{type:Number},
     stock:{type:Number, required:true},
     tags:[{type:String}],

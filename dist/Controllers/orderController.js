@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cancelOrder = exports.updateStatus = exports.createOrder = exports.getAllOrders = exports.getUserOrders = void 0;
 const cartModel_1 = require("../Models/cartModel");
 const orderModel_1 = require("../Models/orderModel");
+const userModel_1 = require("../Models/userModel");
+const productModel_1 = require("../Models/productModel");
 const getUserOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
@@ -56,6 +58,7 @@ const createOrder = async (req, res) => {
     try {
         const userId = req.user?.id;
         const cart = await cartModel_1.cartModel.findOne({ userId });
+        const user = await userModel_1.userModel.findById(userId);
         if (!cart || cart.items.length == 0) {
             res.status(404).json({
                 messageType: "error",
@@ -65,11 +68,30 @@ const createOrder = async (req, res) => {
         else {
             const totalPrice = cart.totalPrice;
             const items = cart.items;
+            var userAddress = user?.address;
+            if (!userAddress) {
+                userAddress = "United India apartments, Mayur Vihar Phase - 1";
+            }
             const order = await new orderModel_1.orderModel({
                 userId,
                 totalPrice,
                 items,
+                to: userAddress,
             });
+            for (const item of items) {
+                const productId = item.productId;
+                const quantity = item.quantity;
+                // Find the product and update stock
+                const product = await productModel_1.productModel.findById(productId);
+                if (product) {
+                    if (product.stock >= quantity) {
+                        product.stock -= quantity;
+                        await product.save();
+                    }
+                    else {
+                    }
+                }
+            }
             await order.save();
             res.status(201).json({
                 messageType: "success",

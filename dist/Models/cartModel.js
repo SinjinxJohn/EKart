@@ -8,7 +8,8 @@ exports.CartItemSchema = new mongoose_1.Schema({
     productName: { type: String, required: true },
     quantity: { type: Number, required: true },
     price: { type: Number, required: true },
-    totalPrice: { type: Number, required: true }
+    totalPrice: { type: Number, required: true },
+    address: { type: String, required: true }
 });
 const CartSchema = new mongoose_1.Schema({
     userId: { type: mongoose_1.Schema.Types.ObjectId, ref: 'UserModel', required: true },
