@@ -11,5 +11,6 @@ userRouter.use(express_1.default.json());
 userRouter.post('/signup', userController_1.signup);
 userRouter.post('/login', userController_1.login);
 userRouter.get('/logout', userController_1.logout);
+userRouter.get('/user', userController_1.getUser);
 exports.default = userRouter;
 //# sourceMappingURL=userRoutes.js.map

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.login = exports.signup = void 0;
+exports.logout = exports.login = exports.getUser = exports.signup = void 0;
 const userModel_1 = require("../Models/userModel");
 const signup = async (req, res) => {
     try {
@@ -84,6 +84,30 @@ const signup = async (req, res) => {
     }
 };
 exports.signup = signup;
+const getUser = async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await userModel_1.userModel.findOne({ email });
+        if (!user) {
+            res.status(404).json({
+                messageType: "error",
+                message: "No user found"
+            });
+        }
+        else {
+            res.status(200).json({
+                messageType: "success",
+                message: user
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error || "Internal Server Error",
+        });
+    }
+};
+exports.getUser = getUser;
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
