@@ -95,6 +95,33 @@ export const signup = async (req: Request, res: Response) => {
 };
 
 
+export const getUser = async (req:Request,res:Response)=>{
+    try {
+        const {email} = req.body;
+        const user = await userModel.findOne({email});
+
+        if(!user){
+            res.status(404).json({
+                messageType:"error",
+                message:"No user found"
+            })
+        }else{
+            res.status(200).json({
+                messageType:"success",
+                message:user
+            })
+        }
+        
+
+        
+    } catch (error) {
+        res.status(500).json({
+            message: error || "Internal Server Error",
+        });
+    }
+}
+
+
 
 export const login = async (req: Request, res: Response) => {
     try {
