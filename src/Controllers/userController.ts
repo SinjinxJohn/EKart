@@ -24,7 +24,7 @@ export const signup = async (req: Request, res: Response) => {
                 });
             } else {
 
-                if (roles == "user" || roles == "Seller") {
+                if (roles.includes("user") || roles.includes("Seller") ) {
                     if (!address) {
                         res.status(400).json({
                             messageType: "error",
