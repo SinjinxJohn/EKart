@@ -86,8 +86,8 @@ const signup = async (req, res) => {
 exports.signup = signup;
 const getUser = async (req, res) => {
     try {
-        const { email } = req.body;
-        const user = await userModel_1.userModel.findOne({ email });
+        const { id } = req.params;
+        const user = await userModel_1.userModel.findById(id);
         if (!user) {
             res.status(404).json({
                 messageType: "error",

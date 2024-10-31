@@ -11,6 +11,6 @@ userRouter.use(express.json());
 userRouter.post('/signup',signup);
 userRouter.post('/login',login);
 userRouter.get('/logout',logout);
-userRouter.get('/user',getUser);
+userRouter.get('/user/:id',getUser);
 export default userRouter;
 
