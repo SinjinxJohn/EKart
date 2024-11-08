@@ -14,13 +14,13 @@ const fetchCart = async (req, res) => {
         let cart = await cartModel_1.cartModel.findOne({ userId });
         if (!cart) {
             res.status(404).json({
-                messageTpe: "error",
+                messageType: "error",
                 message: "The cart is empty"
             });
         }
         else {
             res.status(404).json({
-                messageTpe: "success",
+                messageType: "success",
                 message: cart
             });
         }

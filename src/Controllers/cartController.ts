@@ -11,7 +11,7 @@ export const fetchCart  = async (req:CustomRequest,res:Response)=>{
         let cart = await cartModel.findOne({userId});
         if(!cart){
             res.status(404).json({
-                messageTpe:"error",
+                messageType:"error",
                 message:"The cart is empty"
             });
         }else{
