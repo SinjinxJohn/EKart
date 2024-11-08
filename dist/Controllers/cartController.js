@@ -3,11 +3,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeFromCart = exports.addToCart = void 0;
+exports.removeFromCart = exports.addToCart = exports.fetchCart = void 0;
 const cartModel_1 = require("../Models/cartModel");
 // import { CartItem } from "Models/cartInterface";
 const productModel_1 = require("../Models/productModel");
 const mongoose_1 = __importDefault(require("mongoose"));
+const fetchCart = async (req, res) => {
+    try {
+        const userId = req.user?.id;
+        let cart = await cartModel_1.cartModel.findOne({ userId });
+        if (!cart) {
+            res.status(404).json({
+                messageTpe: "error",
+                message: "The cart is empty"
+            });
+        }
+        else {
+            res.status(404).json({
+                messageTpe: "success",
+                message: cart
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            messageType: "error",
+            message: error
+        });
+    }
+};
+exports.fetchCart = fetchCart;
 const addToCart = async (req, res) => {
     try {
         const userId = req.user?.id;

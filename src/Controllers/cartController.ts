@@ -5,7 +5,29 @@ import { CustomRequest } from "../Middlewares/authHelper";
 import { productModel } from "../Models/productModel";
 import mongoose from "mongoose";
 
-
+export const fetchCart  = async (req:CustomRequest,res:Response)=>{
+    try {
+        const userId = req.user?.id;
+        let cart = await cartModel.findOne({userId});
+        if(!cart){
+            res.status(404).json({
+                messageTpe:"error",
+                message:"The cart is empty"
+            });
+        }else{
+            res.status(404).json({
+                messageTpe:"success",
+                message:cart
+            }); 
+        }
+        
+    } catch (error) {
+        res.status(500).json({
+            messageType: "error",
+            message: error
+        })
+    }
+}
 export const addToCart = async (req: CustomRequest, res: Response) => {
     try {
         const userId = req.user?.id;
