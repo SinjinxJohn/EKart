@@ -15,7 +15,7 @@ export const fetchCart  = async (req:CustomRequest,res:Response)=>{
                 message:"The cart is empty"
             });
         }else{
-            res.status(404).json({
+            res.status(200).json({
                 messageType:"success",
                 message:cart
             }); 
