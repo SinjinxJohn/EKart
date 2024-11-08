@@ -16,7 +16,7 @@ export const fetchCart  = async (req:CustomRequest,res:Response)=>{
             });
         }else{
             res.status(404).json({
-                messageTpe:"success",
+                messageType:"success",
                 message:cart
             }); 
         }
