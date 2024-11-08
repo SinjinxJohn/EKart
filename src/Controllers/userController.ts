@@ -23,21 +23,22 @@ export const signup = async (req: Request, res: Response) => {
                     message: "User already exists",
                 });
             } else {
-
-                if (roles.includes("user") || roles.includes("Seller") ) {
+                // Check if address is required based on roles
+                if (roles.includes("user") || roles.includes("Seller")) {
                     if (!address) {
                         res.status(400).json({
                             messageType: "error",
-                            message: "Address required"
-                        })
+                            message: "Address required",
+                        });
                     } else {
+                        // Create user with address
                         const newUser = await userModel.create({
                             email,
                             password,
                             confirmPassword,
                             username,
                             roles,
-                            address
+                            address,
                         });
 
                         if (newUser) {
@@ -48,12 +49,13 @@ export const signup = async (req: Request, res: Response) => {
                         }
                     }
                 } else {
+                    // Create user without address
                     const newUser = await userModel.create({
                         email,
                         password,
                         confirmPassword,
                         username,
-                        roles
+                        roles,
                     });
 
                     if (newUser) {
@@ -65,34 +67,25 @@ export const signup = async (req: Request, res: Response) => {
                 }
             }
         }
-
-
-
-
-
-
-
-
     } catch (error) {
         if (error instanceof Error) {
             // Handle specific Mongoose validation errors
             if (error.name === 'ValidationError') {
-                // Check if email validation failed
                 const emailError = 'Invalid email format';
                 res.status(400).json({
                     messageType: "error",
                     message: emailError,
                 });
             } else {
-
-
                 res.status(500).json({
-                    message: error || "Internal Server Error",
+                    messageType: "error",
+                    message: error.message || "Internal Server Error",
                 });
             }
         }
     }
 };
+
 
 
 export const getUser = async (req:Request,res:Response)=>{

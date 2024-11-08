@@ -22,21 +22,23 @@ const signup = async (req, res) => {
                 });
             }
             else {
+                // Check if address is required based on roles
                 if (roles.includes("user") || roles.includes("Seller")) {
                     if (!address) {
                         res.status(400).json({
                             messageType: "error",
-                            message: "Address required"
+                            message: "Address required",
                         });
                     }
                     else {
+                        // Create user with address
                         const newUser = await userModel_1.userModel.create({
                             email,
                             password,
                             confirmPassword,
                             username,
                             roles,
-                            address
+                            address,
                         });
                         if (newUser) {
                             res.status(201).json({
@@ -47,12 +49,13 @@ const signup = async (req, res) => {
                     }
                 }
                 else {
+                    // Create user without address
                     const newUser = await userModel_1.userModel.create({
                         email,
                         password,
                         confirmPassword,
                         username,
-                        roles
+                        roles,
                     });
                     if (newUser) {
                         res.status(201).json({
@@ -68,7 +71,6 @@ const signup = async (req, res) => {
         if (error instanceof Error) {
             // Handle specific Mongoose validation errors
             if (error.name === 'ValidationError') {
-                // Check if email validation failed
                 const emailError = 'Invalid email format';
                 res.status(400).json({
                     messageType: "error",
@@ -77,7 +79,8 @@ const signup = async (req, res) => {
             }
             else {
                 res.status(500).json({
-                    message: error || "Internal Server Error",
+                    messageType: "error",
+                    message: error.message || "Internal Server Error",
                 });
             }
         }
