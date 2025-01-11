@@ -4,6 +4,7 @@ import { cartModel } from "../Models/cartModel";
 import { orderModel } from "../Models/orderModel";
 import { userModel } from "../Models/userModel";
 import { productModel } from "../Models/productModel";
+import { io } from "../index";
 
 
 
@@ -127,6 +128,11 @@ export const updateStatus = async (req: Request, res: Response) => {
                 message: "No order found"
             });
         } else {
+            io.to(order.userId.toString()).emit("order-status-updated",{
+                orderId:order._id,
+                status:order.status,
+                message:`Order status has been updated to ${order.status}`
+            });
             res.status(200).json({
                 messageType: "success",
                 message: order

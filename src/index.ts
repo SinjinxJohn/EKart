@@ -12,9 +12,12 @@ import { checkForToken } from "./Middlewares/authHelper";
 import cartRoute from "./Routes/cartRoutes";
 import orderRoute from "./Routes/orderRoutes";
 import paymentRouter from "./Routes/paymentRouter";
+import { Server } from "socket.io";
+// import { Socket } from "dgram";
 
 
 const app = express();
+
 
 app.use(
     cors({
@@ -39,6 +42,20 @@ app.use('/order',checkForToken(),orderRoute);
 app.use('/payments',checkForToken(),paymentRouter);
 
 const server = http.createServer(app);
+export const io = new Server(server);
+
+io.on("connection",(socket)=>{
+    console.log("user is connected");
+
+    socket.on("join",(userId)=>{
+        socket.join(userId);
+        console.log(`User joined room:${userId}`);
+    });
+
+    socket.on("disconnect",()=>{
+        console.log("User has disconnected");
+    })
+})
 
 
 //starter server logic

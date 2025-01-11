@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.io = void 0;
 require('dotenv').config();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
@@ -16,6 +17,8 @@ const authHelper_1 = require("./Middlewares/authHelper");
 const cartRoutes_1 = __importDefault(require("./Routes/cartRoutes"));
 const orderRoutes_1 = __importDefault(require("./Routes/orderRoutes"));
 const paymentRouter_1 = __importDefault(require("./Routes/paymentRouter"));
+const socket_io_1 = require("socket.io");
+// import { Socket } from "dgram";
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
     credentials: true
@@ -33,6 +36,17 @@ app.use("/cart", (0, authHelper_1.checkForToken)(), cartRoutes_1.default);
 app.use('/order', (0, authHelper_1.checkForToken)(), orderRoutes_1.default);
 app.use('/payments', (0, authHelper_1.checkForToken)(), paymentRouter_1.default);
 const server = http_1.default.createServer(app);
+exports.io = new socket_io_1.Server(server);
+exports.io.on("connection", (socket) => {
+    console.log("user is connected");
+    socket.on("join", (userId) => {
+        socket.join(userId);
+        console.log(`User joined room:${userId}`);
+    });
+    socket.on("disconnect", () => {
+        console.log("User has disconnected");
+    });
+});
 //starter server logic
 server.listen(process.env.PORT, () => {
     console.log(`Server running at http://localhost:${process.env.PORT}`);

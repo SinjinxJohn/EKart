@@ -5,6 +5,7 @@ const cartModel_1 = require("../Models/cartModel");
 const orderModel_1 = require("../Models/orderModel");
 const userModel_1 = require("../Models/userModel");
 const productModel_1 = require("../Models/productModel");
+const index_1 = require("index");
 const getUserOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
@@ -120,6 +121,11 @@ const updateStatus = async (req, res) => {
             });
         }
         else {
+            index_1.io.to(order.userId.toString()).emit("order-status-updated", {
+                orderId: order._id,
+                status: order.status,
+                message: `Order status has been updated to ${order.status}`
+            });
             res.status(200).json({
                 messageType: "success",
                 message: order
