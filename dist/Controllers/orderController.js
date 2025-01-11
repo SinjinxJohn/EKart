@@ -5,7 +5,7 @@ const cartModel_1 = require("../Models/cartModel");
 const orderModel_1 = require("../Models/orderModel");
 const userModel_1 = require("../Models/userModel");
 const productModel_1 = require("../Models/productModel");
-const index_1 = require("index");
+const index_1 = require("../index");
 const getUserOrders = async (req, res) => {
     try {
         const userId = req.user?.id;
